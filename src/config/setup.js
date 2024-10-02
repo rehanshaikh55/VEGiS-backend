@@ -9,6 +9,8 @@ import { authenticate, COOKIE_PASSWORD, sessionStore } from "./config.js";
 import {dark,light,noSidebar} from "@adminjs/themes"
 import Category from "../model/category.js";
 import Product from "../model/product.js";
+import Order from "../model/order.js";
+import Counter from "../model/counter.js";
 AdminJS.registerAdapter(AdminJSMongoose);
 
 export const admin = new AdminJS({
@@ -43,6 +45,12 @@ export const admin = new AdminJS({
      {
       resource:Product
      },
+     {
+      resource:Order
+     },
+     {
+      resource:Counter
+     },
   ],
   branding:{
     companyName:"VEGiS",
@@ -51,7 +59,7 @@ export const admin = new AdminJS({
     logo:"https://res.cloudinary.com/dhyg6igyw/image/upload/v1726832374/xurkrptjzcegfflohmlj.png"
   },
   defaultTheme:dark.id,
-  availableThemes:[dark,light,noSidebar],
+  availableThemes:[dark,light,],
  rootPath:'/admin'
   
 });
