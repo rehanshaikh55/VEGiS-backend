@@ -156,7 +156,7 @@ export const getOrderById = async (req, reply) => {
   try {
     const { orderId } = req.params;
 
-    const order = await Order.find(orderId).populate(
+    const order = await Order.findById(orderId).populate(
       "customer branch items.item deliveryPartner"
     );
     if (!order) {
