@@ -1,7 +1,7 @@
 import { confirmOrder, createOrder, getOrder, getOrderById, updateOrderStatus } from "../controller/order/order.js";
 import { verifyToken } from "../middleware/auth.js"
 
-
+import Razorpay from 'razorpay';
 export const orderRouter = async(fastify,option)=>{
     fastify.addHook('preHandler',async(request,reply)=>{
 
@@ -16,6 +16,10 @@ export const orderRouter = async(fastify,option)=>{
     fastify.patch('/order/:orderId/status',updateOrderStatus)
     fastify.post('/order/:orderId/confirm',confirmOrder)
     fastify.get('/order/:orderId',getOrderById)
+    const razorpay = new Razorpay({
+        key_id: 'rzp_test_jmWIy0gRdpwakB',
+        key_secret: 'FLxkdMJeMfXc0y9saiJae7Tv',
+      });
     fastify.post('/payment/razorpay-order', async (req, reply) => {
         const { amount } = req.body;
         const options = {
