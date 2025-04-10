@@ -6,6 +6,7 @@ import { admin, buildAdminRouter } from "./src/config/setup.js";
 import { registerRoutes } from "./src/routes/index.js";
 import fastifySocketIO from "fastify-socket.io";
 import cors from 'cors'
+import Razorpay from 'razorpay';
 
 const start = async () => {
   await connectDB(process.env.MONGO_URI);
@@ -30,7 +31,28 @@ const start = async () => {
       console.log(`VEGiS started on Port: ${PORT}${admin.options.rootPath}`);
     }
   });
-
+  const razorpay = new Razorpay({
+    key_id: 'rzp_test_jmWIy0gRdpwakB',
+    key_secret: 'FLxkdMJeMfXc0y9saiJae7Tv',
+  });
+  
+  app.post('/api/payment/razorpay-order', async (req, res) => {
+    const { amount } = req.body;
+  
+    const options = {
+      amount: amount * 100, // amount in paise
+      currency: 'INR',
+      receipt: `order_rcptid_${Date.now()}`,
+    };
+  
+    try {
+      const response = await razorpay.orders.create(options);
+      res.json(response);
+    } catch (err) {
+      res.status(500).send('Something went wrong');
+    }
+  });
+  
 app.ready().then(()=>{
   app.io.on("connection",(socket)=>{
       console.log("user connected");
