@@ -167,3 +167,10 @@ export const getOrderById = async (req, reply) => {
     return reply.status(500).send({ message: "failed to get order", error });
   }
 };
+
+
+const razorpay = new Razorpay({
+  key_id: 'rzp_test_jmWIy0gRdpwakB',
+  key_secret: 'FLxkdMJeMfXc0y9saiJae7Tv',
+});
+
