@@ -23,7 +23,7 @@ export const orderRouter = async(fastify,option)=>{
     fastify.post('/payment/razorpay-order', async (req, reply) => {
         const { amount } = req.body;
         const options = {
-            amount: amount * 100,
+            amount: amount ,
             currency: "INR",
             receipt: "receipt#1",
             payment_capture: 1,
